@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venezuela Democratic Transition Forum — 2025</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=IBM+Plex+Mono:wght@300;400;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --ink: #1a1208;
+    --paper: #f5f0e8;
+    --cream: #ede7d4;
+    --gold: #c8922a;
+    --gold-light: #e8b84b;
+    --red: #9b2335;
+    --blue-dark: #1b3a5c;
+    --blue: #2563a8;
+    --green: #2d6a4f;
+    --gray: #6b6353;
+    --border: #c8b89a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  .masthead {
+    background: var(--ink);
+    color: var(--paper);
+    border-bottom: 4px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(200,146,42,0.04) 40px, rgba(200,146,42,0.04) 41px);
+  }
+  .masthead-inner { max-width: 1100px; margin: 0 auto; padding: 32px 24px 24px; position: relative; }
+  .masthead-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .masthead-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 52px); font-weight: 900; line-height: 1.05; letter-spacing: -1px; }
+  .masthead-subtitle { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: rgba(245,240,232,0.6); margin-top: 10px; letter-spacing: 2px; }
+  .masthead-rule { height: 1px; background: rgba(200,146,42,0.4); margin: 20px 0 0; }
+
+  .nav-tabs { background: var(--ink); border-bottom: 4px solid var(--gold); }
+  .nav-tabs-inner { max-width: 1100px; margin: 0 auto; display: flex; padding: 0 24px; overflow-x: auto; }
+  .tab-btn {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(245,240,232,0.5); background: none; border: none; padding: 14px 18px; cursor: pointer;
+    border-bottom: 3px solid transparent; margin-bottom: -4px; white-space: nowrap; transition: all 0.2s;
+  }
+  .tab-btn:hover { color: var(--gold-light); }
+  .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); font-weight: 600; }
+
+  .main { max-width: 1100px; margin: 0 auto; padding: 0 24px 60px; }
+  .panel { display: none; padding-top: 32px; }
+  .panel.active { display: block; }
+
+  .section-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+  .section-desc { font-size: 14px; color: var(--gray); line-height: 1.6; max-width: 680px; margin-bottom: 28px; }
+  .divider { height: 1px; background: var(--border); margin: 28px 0; }
+
+  .stakeholder-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin-bottom: 32px; }
+  .stakeholder-card { border: 1px solid var(--border); background: white; overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; }
+  .stakeholder-card:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.12); transform: translateY(-2px); }
+  .card-accent { height: 5px; }
+  .card-body { padding: 20px 22px; }
+  .card-tag { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+  .card-name { font-family: 'Playfair Display', serif; font-size: 19px; font-weight: 700; margin-bottom: 8px; line-height: 1.2; }
+  .card-desc { font-size: 13px; color: var(--gray); line-height: 1.55; margin-bottom: 14px; }
+  .card-positions { display: none; padding-top: 14px; border-top: 1px solid var(--cream); }
+  .card-positions.open { display: block; }
+  .position-item { margin-bottom: 12px; }
+  .position-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); margin-bottom: 3px; }
+  .position-text { font-size: 13px; line-height: 1.5; }
+  .non-negotiable { display: inline-block; background: var(--red); color: white; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; padding: 2px 7px; margin-top: 4px; }
+  .card-toggle { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); background: none; border: 1px solid var(--border); padding: 6px 12px; cursor: pointer; transition: all 0.15s; }
+  .card-toggle:hover { background: var(--cream); }
+
+  .framework-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 28px; }
+  .framework-table th { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; background: var(--ink); color: var(--gold); padding: 10px 14px; text-align: left; white-space: nowrap; }
+  .framework-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  .framework-table tr:nth-child(even) td { background: var(--cream); }
+  .framework-table tr:hover td { background: #efe8d5; }
+  .issue-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; white-space: nowrap; }
+  .consensus-badge { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 1px; padding: 2px 7px; text-transform: uppercase; }
+  .badge-dispute { background: #fce4e4; color: var(--red); border: 1px solid #f5b7b7; }
+  .badge-partial { background: #fef3d0; color: #7d5a00; border: 1px solid #f0d080; }
+  .badge-agree { background: #d5ede1; color: var(--green); border: 1px solid #9fd3b6; }
+
+  .negotiation-arena { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+  @media (max-width: 700px) { .negotiation-arena { grid-template-columns: 1fr; } }
+  .arena-col { border: 1px solid var(--border); background: white; }
+  .arena-col-header { padding: 12px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--paper); background: var(--blue-dark); }
+  .arena-col-body { padding: 16px; }
+  .compromise-item { padding: 10px 12px; border-left: 3px solid var(--gold); background: var(--cream); margin-bottom: 10px; font-size: 13px; line-height: 1.5; }
+  .redline-item { padding: 10px 12px; border-left: 3px solid var(--red); background: #fdf0f0; margin-bottom: 10px; font-size: 13px; line-height: 1.5; }
+
+  .outcome-scenario { border: 2px solid var(--border); margin-bottom: 24px; background: white; overflow: hidden; }
+  .outcome-header { padding: 16px 20px; display: flex; align-items: center; gap: 14px; cursor: pointer; user-select: none; transition: background 0.15s; }
+  .outcome-header:hover { background: var(--cream); }
+  .outcome-icon { font-size: 22px; flex-shrink: 0; }
+  .outcome-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; }
+  .outcome-subtitle { font-size: 12px; color: var(--gray); font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px; margin-top: 2px; }
+  .outcome-body { display: none; padding: 0 20px 20px; border-top: 1px solid var(--border); }
+  .outcome-body.open { display: block; padding-top: 20px; }
+  .outcome-steps { list-style: none; counter-reset: step; }
+  .outcome-steps li { counter-increment: step; display: flex; gap: 14px; margin-bottom: 14px; font-size: 13px; line-height: 1.6; }
+  .outcome-steps li::before { content: counter(step); font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; color: var(--paper); background: var(--gold); min-width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+
+  .callout { padding: 14px 18px; margin: 16px 0; font-size: 13px; line-height: 1.6; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.3px; }
+  .callout-warn { background: #fef3d0; border-left: 4px solid var(--gold); }
+  .callout-danger { background: #fdf0f0; border-left: 4px solid var(--red); }
+  .callout-good { background: #d5ede1; border-left: 4px solid var(--green); }
+
+  .intro-box { border: 2px solid var(--gold); padding: 24px 28px; background: #fffdf5; margin-bottom: 32px; position: relative; }
+  .intro-box::before { content: '❝'; font-family: 'Playfair Display', serif; font-size: 64px; color: var(--gold); opacity: 0.2; position: absolute; top: 8px; left: 16px; line-height: 1; }
+  .intro-box p { font-family: 'Playfair Display', serif; font-size: 16px; line-height: 1.7; padding-left: 30px; }
+
+  .progress-bar-container { background: var(--cream); border: 1px solid var(--border); padding: 20px 24px; margin-bottom: 28px; }
+  .progress-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gray); margin-bottom: 10px; }
+  .progress-track { display: flex; gap: 4px; margin-bottom: 8px; }
+  .progress-seg { flex: 1; height: 8px; background: var(--border); }
+  .progress-seg.filled { background: var(--green); }
+  .progress-seg.partial { background: var(--gold); }
+  .progress-seg.blocked { background: var(--red); }
+  .progress-legend { display: flex; gap: 18px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--gray); }
+  .legend-dot { display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: middle; }
+
+  .instructions { background: var(--ink); color: var(--paper); padding: 20px 24px; margin-bottom: 28px; }
+  .instructions h3 { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .instructions ol { padding-left: 18px; font-size: 13px; line-height: 1.8; color: rgba(245,240,232,0.85); }
+
+  @media (max-width: 600px) {
+    .stakeholder-grid { grid-template-columns: 1fr; }
+    .framework-table { font-size: 12px; }
+    .framework-table th, .framework-table td { padding: 8px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-label">Policy Simulation · Caracas, 2025</div>
+    <div class="masthead-title">Venezuela Democratic<br>Transition Forum</div>
+    <div class="masthead-subtitle">Multi-Stakeholder Negotiation · Roundtable Simulation</div>
+    <div class="masthead-rule"></div>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <div class="nav-tabs-inner">
+    <button class="tab-btn active" onclick="switchTab('context', this)">I. Context</button>
+    <button class="tab-btn" onclick="switchTab('actors', this)">II. Actors</button>
+    <button class="tab-btn" onclick="switchTab('positions', this)">III. Positions</button>
+    <button class="tab-btn" onclick="switchTab('negotiation', this)">IV. Negotiation</button>
+    <button class="tab-btn" onclick="switchTab('outcome', this)">V. Outcome</button>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- I. CONTEXT -->
+  <div class="panel active" id="panel-context">
+    <div class="section-eyebrow">Situation Briefing</div>
+    <div class="section-title">Why did Venezuelan democracy collapse?</div>
+    <div class="section-desc">Structural, institutional, and economic roots of the crisis</div>
+
+    <div class="intro-box">
+      <p>Venezuela did not lose its democracy in a single coup. It was lost progressively: first through institutional co-optation, then through selective repression, and finally through hegemonic state control. Restoring it requires understanding each layer of that collapse.</p>
+    </div>
+
+    <div class="instructions">
+      <h3>Forum Instructions</h3>
+      <ol>
+        <li>Navigate each tab in order to understand the context, the actors, and their positions.</li>
+        <li>Each simulation group must identify which actor they represent and prepare their transition plan.</li>
+        <li>In the "Negotiation" tab, analyze points of agreement, dispute, and each party's red lines.</li>
+        <li>In the "Outcome" tab, the full forum decides: agreement, partial roadmap, or breakdown of negotiations?</li>
+      </ol>
+    </div>
+
+    <div class="section-eyebrow">Structural Causes of the Collapse</div>
+    <div class="divider"></div>
+
+    <table class="framework-table">
+      <thead>
+        <tr><th>Dimension</th><th>What happened</th><th>Institutional consequence</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="issue-label">Executive Power</span></td>
+          <td>Rule-by-decree via permanent emergency powers; concentration of authority in the presidency; elimination of institutional checks and balances.</td>
+          <td>The National Assembly lost its real legislative function. The Supreme Court became an instrument of the executive.</td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">Judiciary</span></td>
+          <td>The Supreme Court (TSJ) was politically packed under Chávez (2004). Independent judges were removed or self-censored.</td>
+          <td>No independent arbiter remains. TSJ rulings served to legitimize the concentration of power.</td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">Electoral System</span></td>
+          <td>The CNE was controlled by ruling-party loyalists. Electoral rules were changed arbitrarily, candidates were banned, and state media was weaponized.</td>
+          <td>Elections without minimum guarantees. A permanent legitimacy crisis around results.</td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">Economy & Oil</span></td>
+          <td>PDVSA was used as a political cash machine. When oil prices collapsed (2014–16), the model failed. Hyperinflation and collapse of basic services followed.</td>
+          <td>7+ million Venezuelans emigrated. The state's human capital was effectively destroyed.</td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">Military & Control</span></td>
+          <td>Militarization of the state: armed forces control companies, ports, and food distribution. Corrupt officers protect the regime in exchange for impunity.</td>
+          <td>The military is an autonomous actor with its own interests. Any transition requires its neutrality or support.</td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">Repression</span></td>
+          <td>SEBIN, DGCIM, and armed colectivos used against opponents. Documented political prisoners, forced exiles, and torture.</td>
+          <td>Fragmented opposition. Intimidated civil society. A pervasive culture of fear.</td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">Foreign Actors</span></td>
+          <td>Cuba provided intelligence and political guidance. Russia and China provided loans and diplomatic cover. The U.S. imposed broad economic sanctions.</td>
+          <td>Venezuela as a geopolitical arena. The regime's survival depends on external allies.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-warn">
+      <strong>Key question:</strong> Which institutions are recoverable and which need to be rebuilt from scratch? The Supreme Court (TSJ), the CNE, the Attorney General's office, and the armed forces are the four critical axes of any negotiation.
+    </div>
+  </div>
+
+  <!-- II. ACTORS -->
+  <div class="panel" id="panel-actors">
+    <div class="section-eyebrow">Actor Mapping</div>
+    <div class="section-title">Who is at the table?</div>
+    <div class="section-desc">Click each card to see the positions, interests, and red lines of each actor. In the simulation, each group represents one of these parties.</div>
+
+    <div class="stakeholder-grid">
+
+      <div class="stakeholder-card">
+        <div class="card-accent" style="background: var(--red);"></div>
+        <div class="card-body">
+          <div class="card-tag" style="color: var(--red);">Government / Ruling Party</div>
+          <div class="card-name">Chavista Establishment (PSUV)</div>
+          <div class="card-desc">Representatives of the ruling PSUV party, cabinet ministers, and state apparatus loyalists. They hold state power but face internal pressure, international sanctions, and a deepening legitimacy crisis.</div>
+          <button class="card-toggle" onclick="toggleCard('chavismo', this)">View positions ↓</button>
+          <div class="card-positions" id="pos-chavismo">
+            <div class="position-item">
+              <div class="position-label">On elections</div>
+              <div class="position-text">Will only accept elections if there are guarantees of no criminal prosecution after the transition. Demand "political amnesty" as a precondition for any deal.</div>
+              <div class="non-negotiable">Red line: Criminal immunity</div>
+            </div>
+            <div class="position-item">
+              <div class="position-label">On the CNE</div>
+              <div class="position-text">Accept CNE renewal only if the opposition cedes proportional representation and does not pre-emptively challenge electoral results.</div>
+            </div>
+            <div class="position-item">
+              <div class="position-label">On the military</div>
+              <div class="position-text">Armed forces must remain in their current institutional role. Purges of the military high command are unacceptable.</div>
+              <div class="non-negotiable">Red line: Integrity of the military high command</div>
+            </div>
+            <div class="position-item">
+              <div class="position-label">Transitional government</div>
+              <div class="position-text">Will only accept a national unity government with equal PSUV-opposition representation. Reject any "technocratic" government that excludes the PSUV from political power.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stakeholder-card">
+        <div class="card-accent" style="background: var(--blue);"></div>
+        <div class="card-body">
+          <div class="card-tag" style="color: var(--blue);">Democratic Opposition</div>
+          <div class="card-name">Unified Democratic Platform (PUD)</div>
+          <div class="card-desc">A heterogeneous coalition of opposition parties — from social democrats to liberals and center-right. Fractured internally over tactics (negotiation vs. maximum pressure) but united in rejecting the regime.</div>
+          <button class="card-toggle" onclick="toggleCard('oposicion', this)">View positions ↓</button>
+          <div class="card-positions" id="pos-oposicion">
+            <div class="position-item">
+              <div class="position-label">On elections</div>
+              <div class="position-text">Demand presidential elections within a maximum of 18 months, with robust international observation (EU, UN, Carter Center), an audited voter roll, and no candidate bans.</div>
+              <div class="non-negotiable">Red line: Banned candidates must be free to run</div>
+            </div>
+            <div class="position-item">
+              <div class="position-label">On the CNE</div>
+              <div class="position-text">The CNE must be dissolved and reconstituted with independent commissioners proposed by civil society and ratified by a legitimate National Assembly.</div>
+            </div>
+            <div class="position-item">
+              <div class="position-label">On transitional justice</div>
+              <div class="position-text">Accept transitional justice mechanisms (truth, reparations, non-recurrence guarantees) but reject blanket amnesty for crimes against humanity.</div>
+            </div>
+            <div class="position-item">
+              <div class="position-label">Transitional government</div>
+              <div class="position-text">Propose a 7-member State Council: 3 opposition, 2 civil society, 1 ruling party, 1 business sector. Maximum mandate of 24 months.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stakeholder-card">
+        <div class="card-accent" style="background: #4a5568;"></div>
+        <div class="card-body">
+          <div class="card-tag" style="color: #4a5568;">Armed Forces</div>
+          <div class="card-name">FANB — Reformist Factions</div>
+          <div class="card-desc">Mid- and high-ranking officers who have signaled openness to a negotiated transition, on condition that the armed forces retain their constitutional role, their institutional benefits, and are not subjected to mass purges.</div>
+          <button class="card-toggle" onclick="toggleCard('ffaa', this)">View positions ↓</button>
+          <div class="card-positions" id="pos-ffaa">
+            <div class="position-item">
+              <div class="position-label">Core condition</div>
+              <div class="position-text">Active neutrality: the armed forces will not back the regime if it is guaranteed there will be no special military tribunals or extraditions for drug trafficking charges during the transition.</div>
+              <div class="non-negotiable">Red line: No extradition of officers to the United States</div>
+            </div>
+            <div class="position-item">
+              <div class="position-label">On security</div>
+              <div class="position-text">The military will maintain public order during the transition. Armed colectivos must be demobilized gradually — not abruptly.</div>
+            </div>
+            <div class="position-item">
+              <div class="position-label">On politics</div>
+              <div class="position-text">Support creation of a civilian transitional government. Will not participate directly in politics and will not accept being assigned political responsibility for the crisis.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stakeholder-card">
+        <div class="card-accent" style="background: var(--green);"></div>
+        <div class="card-body">
+          <div class="card-tag" style="color: var(--green);">Civil Society</div>
+          <div class="card-name">Civil Society Organizations (CSOs)</div>
+          <div class="card-desc">Human rights NGOs, professional associations, labor unions, churches, and community networks. They represent Venezuelans not affiliated with any party — and are often the most directly affected by the crisis.</div>
+          <button class="card-toggle" onclick="toggleCard('sociedad', this)">View positions ↓</button>
+          <div class="card-positions" id="pos-sociedad">
+            <div class="position-item">
+              <div class="position-label">Priority 1: Human rights</div>
+              <div class="position-text">Demand the immediate release of all political prisoners as a precondition for any formal negotiation. Document 272+ political prisoners (Foro Penal, 2024).</div>
+              <div class="non-negotiable">Red line: No release of prisoners = no negotiating table</div>
+            </div>
+            <div class="position-item">
+              <div class="position-label">Priority 2: Participation</div>
+              <div class="position-text">Demand a guaranteed seat in any transitional government. Will not accept being treated as secondary actors in a bilateral deal between the regime and the opposition.</div>
+            </div>
+            <div class="position-item">
+              <div class="position-label">On justice</div>
+              <div class="position-text">Support a "Truth Commission" model with victim participation. Reject amnesties without acknowledgment of responsibility.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stakeholder-card">
+        <div class="card-accent" style="background: var(--gold);"></div>
+        <div class="card-body">
+          <div class="card-tag" style="color: #7d5a00;">International Community</div>
+          <div class="card-name">Foreign Actors</div>
+          <div class="card-desc">The U.S., EU, Latin American countries (Mexico, Brazil, Colombia), and bodies such as the OAS and UN. Divided between those who favor maximum pressure and those who prefer facilitated negotiation.</div>
+          <button class="card-toggle" onclick="toggleCard('internacional', this)">View positions ↓</button>
+          <div class="card-positions" id="pos-internacional">
+            <div class="position-item">
+              <div class="position-label">USA / Europe</div>
+              <div class="position-text">Offer to lift sanctions in exchange for verifiable elections. Condition economic assistance on compliance with a democratic roadmap. Demand freedom for all political prisoners.</div>
+            </div>
+            <div class="position-item">
+              <div class="position-label">Mexico / Brazil / Colombia</div>
+              <div class="position-text">Prefer a negotiated solution without external imposition. Offer to serve as process guarantors. Oppose sanctions as the primary tool of pressure.</div>
+            </div>
+            <div class="position-item">
+              <div class="position-label">Russia / China / Cuba</div>
+              <div class="position-text">Support the "sovereignty" of the Maduro government. Would only accept a transition if PSUV retains political influence. Block resolutions in the UN Security Council.</div>
+            </div>
+            <div class="position-item">
+              <div class="position-label">Role in the transition</div>
+              <div class="position-text">UN and Carter Center electoral supervision; funding for institutional reconstruction; ongoing compliance verification.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stakeholder-card">
+        <div class="card-accent" style="background: #7c3aed;"></div>
+        <div class="card-body">
+          <div class="card-tag" style="color: #7c3aed;">Venezuelan Diaspora</div>
+          <div class="card-name">7+ Million Venezuelans Abroad</div>
+          <div class="card-desc">The largest diaspora in Latin America. Significant concentrations in Colombia, Peru, Chile, Spain, and the U.S. They hold formal political rights but face major practical obstacles to voting. Highly mobilized politically.</div>
+          <button class="card-toggle" onclick="toggleCard('diaspora', this)">View positions ↓</button>
+          <div class="card-positions" id="pos-diaspora">
+            <div class="position-item">
+              <div class="position-label">Central demand</div>
+              <div class="position-text">Guaranteed overseas voting, access to consulates, updated voter registries, and logistical support. The regime historically suppressed these mechanisms.</div>
+              <div class="non-negotiable">Red line: Right to vote from abroad</div>
+            </div>
+            <div class="position-item">
+              <div class="position-label">On return</div>
+              <div class="position-text">Demand security guarantees for voluntary return. A reintegration program with degree recognition as part of the transition agreement.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- III. POSITIONS -->
+  <div class="panel" id="panel-positions">
+    <div class="section-eyebrow">Comparative Analysis</div>
+    <div class="section-title">Positions on key institutions</div>
+    <div class="section-desc">A side-by-side comparison of stances on the central negotiating issues. Colors indicate current consensus status.</div>
+
+    <div class="progress-bar-container">
+      <div class="progress-label">Process status — issues negotiated</div>
+      <div class="progress-track">
+        <div class="progress-seg filled"></div>
+        <div class="progress-seg partial"></div>
+        <div class="progress-seg partial"></div>
+        <div class="progress-seg blocked"></div>
+        <div class="progress-seg blocked"></div>
+        <div class="progress-seg blocked"></div>
+        <div class="progress-seg blocked"></div>
+        <div class="progress-seg"></div>
+        <div class="progress-seg"></div>
+        <div class="progress-seg"></div>
+      </div>
+      <div class="progress-legend">
+        <span><span class="legend-dot" style="background:var(--green);"></span>Agreed</span>
+        <span><span class="legend-dot" style="background:var(--gold);"></span>In discussion</span>
+        <span><span class="legend-dot" style="background:var(--red);"></span>Blocked</span>
+        <span><span class="legend-dot" style="background:var(--border);"></span>Not yet addressed</span>
+      </div>
+    </div>
+
+    <table class="framework-table">
+      <thead>
+        <tr><th>Issue</th><th>Ruling Party</th><th>Opposition</th><th>Military</th><th>Civil Society</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="issue-label">Transitional govt.</span></td>
+          <td>Equal PSUV-opposition share</td>
+          <td>Opposition majority + technocrats</td>
+          <td>Civilian govt., military stays out</td>
+          <td>Guaranteed CSO quota</td>
+          <td><span class="consensus-badge badge-partial">Partial</span></td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">Electoral timeline</span></td>
+          <td>Minimum 24–36 months</td>
+          <td>Maximum 12–18 months</td>
+          <td>Neutral, prioritize stability</td>
+          <td>18 months with clear roadmap</td>
+          <td><span class="consensus-badge badge-partial">Partial</span></td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">CNE reform</span></td>
+          <td>Partial renewal, PSUV quota</td>
+          <td>Full dissolution and reconstitution</td>
+          <td>No position</td>
+          <td>Independent commissioners, full audit</td>
+          <td><span class="consensus-badge badge-dispute">Blocked</span></td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">Judiciary reform</span></td>
+          <td>Rejects purge of sitting justices</td>
+          <td>New justices via reconstituted Assembly</td>
+          <td>Demands judicial neutrality</td>
+          <td>Independent judges, open competition</td>
+          <td><span class="consensus-badge badge-dispute">Blocked</span></td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">Political prisoners</span></td>
+          <td>Gradual, conditional release</td>
+          <td>Immediate and total release</td>
+          <td>Support release of civilians</td>
+          <td>Immediate release as precondition</td>
+          <td><span class="consensus-badge badge-dispute">Blocked</span></td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">Amnesty / Justice</span></td>
+          <td>Full amnesty for all parties</td>
+          <td>Transitional justice, no blanket amnesty</td>
+          <td>Institutional protection for military</td>
+          <td>Truth Commission, reparations for victims</td>
+          <td><span class="consensus-badge badge-dispute">Blocked</span></td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">International sanctions</span></td>
+          <td>Must be lifted before any agreement</td>
+          <td>Lift progressively as progress is verified</td>
+          <td>Neutral</td>
+          <td>Conditioned on human rights improvements</td>
+          <td><span class="consensus-badge badge-dispute">Blocked</span></td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">Role of foreign actors</span></td>
+          <td>Guarantors without binding authority</td>
+          <td>Observers with certification power</td>
+          <td>Neutral, prefer discretion</td>
+          <td>Active role for UN and intl. CSOs</td>
+          <td><span class="consensus-badge badge-agree">Possible agreement</span></td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">Diaspora vote</span></td>
+          <td>Rejects broad expansion of overseas voting</td>
+          <td>Demands full overseas access</td>
+          <td>No position</td>
+          <td>Full overseas access supported</td>
+          <td><span class="consensus-badge badge-dispute">Blocked</span></td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">PDVSA & economy</span></td>
+          <td>State control; honor Russia/China contracts</td>
+          <td>Full audit; renegotiate all contracts</td>
+          <td>Maintain military's economic roles</td>
+          <td>Transparency and independent audit</td>
+          <td><span class="consensus-badge badge-dispute">Blocked</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- IV. NEGOTIATION -->
+  <div class="panel" id="panel-negotiation">
+    <div class="section-eyebrow">Negotiation Simulation</div>
+    <div class="section-title">The negotiating table</div>
+    <div class="section-desc">This is the space for active negotiation. Each group must identify its possible compromises and its absolute red lines before seeking consensus with other parties.</div>
+
+    <div class="callout callout-warn">
+      <strong>Forum instruction:</strong> A transition can only happen if ALL actors accept the agreed framework. Without the ruling party, there is no peaceful transition. Without the opposition, there is no legitimacy. Without the military, there is no order. Without civil society, there is no representation.
+    </div>
+
+    <div class="section-eyebrow" style="margin-top: 24px;">Zones of possible agreement</div>
+    <div class="divider"></div>
+
+    <div class="negotiation-arena">
+      <div class="arena-col">
+        <div class="arena-col-header">Possible compromises (concessions)</div>
+        <div class="arena-col-body">
+          <div class="compromise-item">
+            <strong>On the timeline:</strong> All actors show flexibility on timing. A window of 18–24 months for presidential elections could be acceptable to all parties if backed by real, verifiable guarantees.
+          </div>
+          <div class="compromise-item">
+            <strong>On the CNE:</strong> A mixed CNE with non-partisan technical commissioners selected by consensus and internationally audited could bridge the gap between "full dissolution" and "continuity."
+          </div>
+          <div class="compromise-item">
+            <strong>On sanctions:</strong> A progressive sanctions-lifting mechanism tied to verifiable democratic milestones could align the ruling party's incentives with the requirements of a genuine agreement.
+          </div>
+          <div class="compromise-item">
+            <strong>On government composition:</strong> A 9-member State Council — 2 PSUV, 3 opposition, 2 civil society, 1 economic sector, 1 diaspora representative — with a rotating presidency every 6 months.
+          </div>
+          <div class="compromise-item">
+            <strong>On the military:</strong> The armed forces guarantee neutrality and security of the process. In exchange: no purges or extraditions during the transition. Human rights cases are referred to the Truth Commission, not to foreign courts.
+          </div>
+        </div>
+      </div>
+      <div class="arena-col">
+        <div class="arena-col-header" style="background: var(--red);">Absolute red lines (non-negotiable)</div>
+        <div class="arena-col-body">
+          <div class="redline-item">
+            <strong>Ruling party:</strong> No PSUV leader can be referred to international criminal courts as a condition of the agreement. Without this guarantee, the process cannot advance.
+          </div>
+          <div class="redline-item">
+            <strong>Opposition:</strong> Candidates banned by the regime — including María Corina Machado and others — must be permitted to stand for election. No elections without free candidacies.
+          </div>
+          <div class="redline-item">
+            <strong>Military:</strong> No extradition of Venezuelan military personnel to the United States or other countries on drug trafficking charges for the duration of the transition agreement.
+          </div>
+          <div class="redline-item">
+            <strong>Civil society:</strong> The release of political prisoners is not a bargaining chip — it is a precondition for formal talks to begin. No prisoners released, no negotiating table.
+          </div>
+          <div class="redline-item">
+            <strong>International community (US/EU):</strong> Will not recognize any transitional government that does not include a verifiable electoral timeline with independent international observation.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-eyebrow" style="margin-top: 8px;">Proposed structure of the transitional government</div>
+    <div class="divider"></div>
+
+    <table class="framework-table">
+      <thead>
+        <tr><th>Institution</th><th>Proposed composition</th><th>Mandate</th><th>Agreement requirement</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="issue-label">State Council</span></td>
+          <td>9 members: 2 PSUV + 3 opposition + 2 CSOs + 1 business sector + 1 diaspora</td>
+          <td>18–24 months, until elections</td>
+          <td>Consensus of all actors</td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">Transitional CNE</span></td>
+          <td>5 technical commissioners selected by a joint committee with UN/OAS validation</td>
+          <td>Until general elections</td>
+          <td>Govt. + opposition + international agreement</td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">Transitional Supreme Court</span></td>
+          <td>7 justices: 4 new via open public competition + 3 confirmed from current court if they pass an independent audit</td>
+          <td>Until new constitution or reform</td>
+          <td>Opposition + CSOs + military agreement</td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">Truth Commission</span></td>
+          <td>Victim representatives, CSOs, international jurists. No punitive power; 3-year mandate</td>
+          <td>Begins in month 3 of the transition</td>
+          <td>Acceptable to all parties if it carries no direct punitive power</td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">Armed Forces (FANB)</span></td>
+          <td>Maintain current structure; serve as order guarantors; withdraw colectivos from urban areas within 6 months</td>
+          <td>Doctrine review following elections</td>
+          <td>Military's core condition for joining the process</td>
+        </tr>
+        <tr>
+          <td><span class="issue-label">International guarantors</span></td>
+          <td>Mexico + Brazil + Colombia (regional guarantors) + UN + Carter Center (observers)</td>
+          <td>Duration of the full process</td>
+          <td>Govt. accepts verification role; opposition accepts neutral-country inclusion</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- V. OUTCOME -->
+  <div class="panel" id="panel-outcome">
+    <div class="section-eyebrow">Forum Outcome</div>
+    <div class="section-title">Agreement or breakdown?</div>
+    <div class="section-desc">The forum must collectively decide on one of these three outcomes and communicate it to the Venezuelan people. Click each scenario to expand it. What did the table decide?</div>
+
+    <div class="outcome-scenario">
+      <div class="outcome-header" onclick="toggleOutcome('A')">
+        <div class="outcome-icon">🤝</div>
+        <div>
+          <div class="outcome-title">Outcome A — Framework Transition Agreement</div>
+          <div class="outcome-subtitle">All parties sign a minimum viable agreement</div>
+        </div>
+      </div>
+      <div class="outcome-body" id="out-A">
+        <div class="callout callout-good">
+          <strong>Conditions for this to be possible:</strong> The ruling party receives non-prosecution guarantees during the transition. The opposition secures an electoral timeline with real oversight. The military gets institutional protection. Civil society has guaranteed representation. International actors certify the process.
+        </div>
+        <p style="font-size:14px; color:var(--gray); margin-bottom:16px;">5-phase implementation plan:</p>
+        <ol class="outcome-steps">
+          <li><strong>Month 0–1 — Founding Agreement:</strong> Signature of the "Caracas Pact" by all actors. Release of political prisoners as a good-faith gesture. International announcement of the process begins.</li>
+          <li><strong>Month 1–3 — Installation of the State Council:</strong> Constitution of the 9-member transitional government. Appointment of the Transitional CNE with UN validation. Beginning of voter roll audit.</li>
+          <li><strong>Month 3–9 — Stabilization:</strong> Progressive sanction lifting tied to verifiable milestones. Truth Commission begins its work. Gradual demobilization of colectivos. Partial reconstitution of the Supreme Court.</li>
+          <li><strong>Month 9–18 — Electoral preparation:</strong> Candidate registration opens (no political bans enforced). Consulates open for diaspora voter registration. Electoral campaign with equitable media access for all parties.</li>
+          <li><strong>Month 18–24 — Elections and transfer of power:</strong> Presidential, parliamentary, and regional elections held in a single cycle. Full international observation. Peaceful transfer of power to the elected government.</li>
+        </ol>
+        <div class="callout callout-warn">
+          <strong>Statement to the Venezuelan people:</strong> "The parties gathered in this forum have reached a framework agreement for Venezuela's democratic transition. This agreement does not fully satisfy any single party — that is the sign that it is fair. Together, we commit to a transparent, verified, and peaceful path toward free elections."
+        </div>
+      </div>
+    </div>
+
+    <div class="outcome-scenario">
+      <div class="outcome-header" onclick="toggleOutcome('B')">
+        <div class="outcome-icon">⚠️</div>
+        <div>
+          <div class="outcome-title">Outcome B — Partial Agreement with a Roadmap</div>
+          <div class="outcome-subtitle">Minimum consensus on some issues; harder issues deferred for later rounds</div>
+        </div>
+      </div>
+      <div class="outcome-body" id="out-B">
+        <div class="callout callout-warn">
+          <strong>Scenario:</strong> The parties cannot resolve the hardest issues (amnesty, CNE reform, candidate bans) but do agree on a procedural framework and a roadmap with clear timelines and designated arbiters.
+        </div>
+        <ol class="outcome-steps">
+          <li><strong>Immediate agreement:</strong> Release of 50% of political prisoners within 30 days. Installation of a permanent dialogue mechanism with international guarantors. Cessation of repressive operations against opposition figures and civil society.</li>
+          <li><strong>Negotiating agenda:</strong> CNE reform, candidate bans, and amnesty remain on the agenda with a 6-month deadline to resolve. Process mediated by Mexico and Brazil.</li>
+          <li><strong>Caretaker government:</strong> A bipartisan technical caretaker government — not a full transition government — is installed to manage the economy and public services while negotiations continue.</li>
+          <li><strong>Breakpoint:</strong> If no agreement is reached on blocked issues within 6 months, Outcome C is automatically triggered.</li>
+        </ol>
+        <div class="callout callout-warn">
+          <strong>Statement:</strong> "We have reached significant partial agreements and commit to continuing the dialogue. Venezuela deserves a complete solution. We will keep working."
+        </div>
+      </div>
+    </div>
+
+    <div class="outcome-scenario">
+      <div class="outcome-header" onclick="toggleOutcome('C')">
+        <div class="outcome-icon">💔</div>
+        <div>
+          <div class="outcome-title">Outcome C — Breakdown of Negotiations</div>
+          <div class="outcome-subtitle">Parties declare the collapse of the process and inform the country</div>
+        </div>
+      </div>
+      <div class="outcome-body" id="out-C">
+        <div class="callout callout-danger">
+          <strong>Scenario:</strong> The ruling party walks out after failing to secure impunity guarantees. Or the opposition withdraws as candidate bans remain in place. Or the military refuses to guarantee neutrality. The process collapses entirely.
+        </div>
+        <ol class="outcome-steps">
+          <li><strong>Statement of failure:</strong> Each party publicly explains why agreement was not possible and who bears responsibility for the collapse. Transparency is essential for maintaining legitimacy before the Venezuelan people.</li>
+          <li><strong>Immediate consequences:</strong> Deepening of international sanctions. Possible U.S. and EU recognition of an alternative government. New waves of social mobilization inside and outside Venezuela.</li>
+          <li><strong>Alternative scenarios:</strong> (a) Maximum pressure strategy until regime collapse; (b) Internal fracture of chavismo that opens a new negotiating window; (c) Indefinite prolongation of the status quo with continued humanitarian collapse.</li>
+          <li><strong>Civil society's role:</strong> CSOs take on the critical role of keeping the democratic demand alive, documenting abuses, and preserving the cohesion of the human rights movement through the impasse.</li>
+        </ol>
+        <div class="callout callout-danger">
+          <strong>Statement to the Venezuelan people:</strong> "We regret to inform you that the dialogue process did not reach an agreement. [Responsible party] refused to accept the minimum conditions for a democratic transition. We will continue to seek paths to guarantee the rights of the Venezuelan people. Democracy is not dead — it is being resisted."
+        </div>
+        <div class="callout callout-warn">
+          <strong>Reflection question:</strong> What mistakes did the negotiators make? What single concession might have changed the outcome? What is the difference between a legitimate red line and a maximalist position that destroys the entire process?
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-eyebrow">Final Reflection Questions</div>
+    <div style="margin-top: 16px;">
+      <div class="callout callout-warn" style="margin-bottom: 12px;">
+        <strong>1.</strong> Is democracy possible without justice? Or is impunity the unavoidable price of a peaceful transition?
+      </div>
+      <div class="callout callout-warn" style="margin-bottom: 12px;">
+        <strong>2.</strong> What role should the international community play without crossing into a form of neo-colonial interference in Venezuelan sovereignty?
+      </div>
+      <div class="callout callout-warn" style="margin-bottom: 12px;">
+        <strong>3.</strong> Can the armed forces simultaneously serve as guarantors of the transition and remain suspects in human rights crimes? How is that contradiction resolved?
+      </div>
+      <div class="callout callout-warn">
+        <strong>4.</strong> Who has the right to define what a "successful transition" looks like — the negotiators, the Venezuelan people, or the international community?
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+  function toggleCard(id, btn) {
+    const el = document.getElementById('pos-' + id);
+    el.classList.toggle('open');
+    btn.textContent = el.classList.contains('open') ? 'Close ↑' : 'View positions ↓';
+  }
+  function toggleOutcome(id) {
+    document.getElementById('out-' + id).classList.toggle('open');
+  }
+</script>
+</body>
+</html>
